@@ -6,15 +6,7 @@ A high-performance, resilient microservices-based web crawler and image archivin
 
 ## 🏗️ Architecture Flow
 
-```mermaid
-graph TD
-    A[Puppeteer Crawler: cat5.ts] -- HTTP POST --> B[Fastify API: :3001]
-    B -- Prisma ORM --> C[(PostgreSQL Database)]
-    B -- Event Publish --> D[NATS Event Broker: :4222]
-    E[Image Persister Daemon] -- Subscribe --> D
-    E -- Chromium CDN Bypass --> F[image.invaluable.com]
-    E -- Local Save --> G[raw/ folder]
-```
+![Architecture Flow](./graph.svg)
 
 1. **Crawler (`packages/crawler`)**: Uses a real, headless Chrome instance (via Puppeteer) to authenticate with invaluable.com, query `/catResults` via injected AJAX context, extract 15+ rich metadata fields, and POST them to the API.
 2. **API (`packages/api`)**: Receives artwork batches, performs unique deduplication, writes metadata to PostgreSQL via Prisma ORM, and publishes a `artworks.new` event to NATS.
@@ -25,6 +17,8 @@ graph TD
 ## ⚡ Quick Start (Setup)
 
 Ensure you have **Node.js**, **Docker**, and **pnpm** installed.
+
+![Dashboard](./dashboard.png)
 
 ### 1. One-Step Setup
 Run the unified setup command to install workspace dependencies, spin up the Docker infrastructure, and push the database schema:
