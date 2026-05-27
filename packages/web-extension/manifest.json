@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Art Scraper",
+  "version": "1.0.0",
+  "description": "Scrapes invaluable.com for art data and sends to local API",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost:3001/*",
+    "https://*.invaluable.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.invaluable.com/search*"],
+      "js": ["content.js"]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Artwork {
+  id              String   @id @default(uuid())
+  auctionLink     String   @unique
+  imageLink       String   @unique
+  title           String?
+  date            String?
+  auctionHouse    String?
+  watched         Boolean? @default(false)
+  dateTimeUTCUnix Int?
+  dateTimeLocal   String?
+  lotNumber       String?
+  lotRef          String?
+  photoPath       String?
+  currencyCode    String?
+  currencySymbol  String?
+  priceResult     Float?
+  saleType        String?
+  createdAt       DateTime @default(now())
+}
